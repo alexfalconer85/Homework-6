@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    // search button listener
     $("#search-icon").on("click", function () {
         var searchValue = $("#search-value").val();
 
@@ -7,40 +8,18 @@ $(document).ready(function () {
 
         fiveDayWeather(searchValue);
     });
-
+    // history event listener
     $(".history").on("click", "li", function () {
         fiveDayWeather($(this).text());
     });
 
-    function getUVIndex(lat, lon) {
-        $.ajax({
-            type: "GET",
-            url: "http://api.openweathermap.org/data/2.5/uvi?appid=683c09a5969505d5268d678e16ffceba&lat=" + lat + "&lon=" + lon,
-            dataType: "json",
-            success: function (data) {
-                var uv = $("<p>").text("UV Index: ");
-                var btn = $("<span>").addClass("btn btn-sm").text(data.value);
 
-                // change color depending on uv value
-                if (data.value < 3) {
-                    btn.addClass("btn-success");
-                } else if (data.value < 7) {
-                    btn.addClass("btn-warning");
-                } else {
-                    btn.addClass("btn-danger");
-                }
-
-                $("#today .card-body").append(uv.append(btn));
-            }
-        });
-    }
-
-
+    // make rows
     function makeRow(text) {
         var li = $("<li>").addClass("list-group-item list-group-item-action").text(text);
         $(".history").append(li);
     }
-
+    // ajax response functionality
     function getForecast(searchValue) {
         $.ajax({
             type: "GET",
@@ -74,7 +53,7 @@ $(document).ready(function () {
             }
         });
     }
-
+    // 5 day weather
     function fiveDayWeather(searchValue) {
         $.ajax({
             type: "GET",
@@ -114,6 +93,28 @@ $(document).ready(function () {
         });
     }
 
+    function getUVIndex(lat, lon) {
+        $.ajax({
+            type: "GET",
+            url: "http://api.openweathermap.org/data/2.5/uvi?appid=683c09a5969505d5268d678e16ffceba&lat=" + lat + "&lon=" + lon,
+            dataType: "json",
+            success: function (data) {
+                var uv = $("<p>").text("UV Index: ");
+                var btn = $("<span>").addClass("btn btn-sm").text(data.value);
+
+                // change color depending on uv value
+                if (data.value < 3) {
+                    btn.addClass("btn-success");
+                } else if (data.value < 7) {
+                    btn.addClass("btn-warning");
+                } else {
+                    btn.addClass("btn-danger");
+                }
+
+                $("#today .card-body").append(uv.append(btn));
+            }
+        });
+    }
 
     // get current history, if any
     var history = JSON.parse(window.localStorage.getItem("history")) || [];
