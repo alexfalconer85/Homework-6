@@ -6,11 +6,11 @@ $(document).ready(function () {
         // clear input box
         $("#search-value").val("");
 
-        fiveDayWeather(searchValue);
+        searchWeather(searchValue);
     });
     // history event listener
     $(".history").on("click", "li", function () {
-        fiveDayWeather($(this).text());
+        searchWeather($(this).text());
     });
 
 
@@ -54,7 +54,7 @@ $(document).ready(function () {
         });
     }
     // 5 day weather
-    function fiveDayWeather(searchValue) {
+    function searchWeather(searchValue) {
         $.ajax({
             type: "GET",
             url: "http://api.openweathermap.org/data/2.5/weather?q=" + searchValue + "&appid=683c09a5969505d5268d678e16ffceba&units=imperial",
@@ -120,7 +120,7 @@ $(document).ready(function () {
     var history = JSON.parse(window.localStorage.getItem("history")) || [];
 
     if (history.length > 0) {
-        fiveDayWeather(history[history.length - 1]);
+        searchWeather(history[history.length - 1]);
     }
 
     for (var i = 0; i < history.length; i++) {
