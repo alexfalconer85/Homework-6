@@ -1,5 +1,6 @@
 $(document).ready(function () {
   // search button listener
+
   $("#search-icon").on("click", function () {
     var searchValue = $("#search-value").val();
 
@@ -161,6 +162,8 @@ $(document).ready(function () {
 
   if (history.length > 0) {
     searchWeather(history[history.length - 1]);
+  } else {
+    searchWeather("Denver");
   }
 
   for (var i = 0; i < history.length; i++) {
